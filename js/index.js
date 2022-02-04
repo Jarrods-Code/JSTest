@@ -7,16 +7,16 @@
   The tasks you need to do are below.
 
     TASKS TODO:
-      1. Calculate the score as the total of the number of correct answers
+      1. Calculate the score as the total of the number of correct answers DONE
 
       2. Add an Event listener for the submit button, which will display the score and highlight 
          the correct answers when the button is clicked. Use the code from lines 67 to 86 to help you.
 
-      3. Add 2 more questions to the app (each question must have 4 options).
+      3. Add 2 more questions to the app (each question must have 4 options). DONE
 
-      4. Reload the page when the reset button is clicked (hint: search window.location)
+      4. Reload the page when the reset button is clicked (hint: search window.location) DONE
 
-      5. Add a countdown timer - when the time is up, end the quiz, display the score and highlight the correct answers
+      5. Add a countdown timer - when the time is up, end the quiz, display the score and highlight the correct answers 1/2 DONE
 *************************** */
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -43,6 +43,16 @@ window.addEventListener('DOMContentLoaded', () => {
       q: 'What is the capital of Australia',
       o: ['Sydney', 'Canberra', 'Melbourne', 'Perth'],
       a: 1,
+    },
+    {
+      q: 'Which City in Australia has been name the best city in the world to live in from 2011 to 2017?',
+      o: ['Tasmania', 'Melbourne', 'Sydney', 'Victoria'],
+      a: 1, // array index 1 - so Melbourne is the correct answer here
+    },
+    {
+      q: 'Which State or Territory is Crandle Mountain located in?',
+      o: ['South Australia', 'Western Australia', 'Tasmania', 'Northern Territory'],
+      a: 2, // array index 2 - so Tasmania is the correct answer here
     },
   ];
 
@@ -79,8 +89,14 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         if (radioElement.checked) {
-          // code for task 1 goes here
+          // For the selected answer to match the actual answer
+          if (i == quizItem.a) {
+            score++;
+            console.log("The total number of correct answers is:", score);
+            console.log(quizItem.q);
+          }
         }
+        
       }
     });
   };

@@ -15,6 +15,7 @@
       crossorigin="anonymous"
     />
     <title>Quiz</title>
+
   </head>
   <body>
     <div class="container m-5" id="start">
@@ -31,15 +32,52 @@
     <div class="container" id="quizBlock" style="display: none">
       <div class="mb-5">
         <h2>Test your knowledge</h2>
-        - Time remaining <span id="time">01:00</span>
+        - Time remaining <span id="time">05:00</span>
+
+      <script>
+     function startTimer(duration, display) {
+    var start = Date.now(),
+        diff,
+        minutes,
+        seconds;
+    function timer() {
+        
+        diff = duration - (((Date.now() - start) / 1000) | 0);
+
+       
+        minutes = (diff / 60) | 0;
+        seconds = (diff % 60) | 0;
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds; 
+
+        if (diff <= 0) {
+           
+            start = Date.now() + 1000;
+        }
+    };
+    
+    timer();
+    setInterval(timer, 1000);
+}
+
+window.onload = function () {
+    var fiveMinutes = 60 * 5,
+        display = document.querySelector('#time');
+    startTimer(fiveMinutes, display);
+};
+   </script>
       </div>
+
       <div id="quizWrap"></div>
 
       <div>
-        <button type="button" class="btn btn-primary" id="btnSubmit">
+        <button type="button" class="btn btn-primary" id="btnSubmit" onclick="calculateScore()">
           Submit Quiz
         </button>
-        <button type="button" class="btn btn-primary" id="btnReset">
+        <button type="button" class="btn btn-primary" id="btnReset" onclick="location.reload()">
           Reset Quiz
         </button>
         <span id="score"></span>
