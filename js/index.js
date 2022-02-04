@@ -18,12 +18,17 @@
 
       5. Add a countdown timer - when the time is up, end the quiz, display the score and highlight the correct answers 1/2 DONE
 *************************** */
+const resultsScore = document.querySelector('#score');
+const submitButton = document.querySelector('#btnSubmit');
+let countdownTimer = 1*10*1000;
+let display = document.querySelector('#time');
 
 window.addEventListener('DOMContentLoaded', () => {
   const start = document.querySelector('#start');
   start.addEventListener('click', function (e) {
     document.querySelector('#quizBlock').style.display = 'block';
     start.style.display = 'none';
+    timer(new Date().getTime() + countdownTimer);
   });
   // quizArray QUESTIONS & ANSWERS
   // q = QUESTION, o = OPTIONS, a = CORRECT ANSWER
@@ -72,6 +77,24 @@ window.addEventListener('DOMContentLoaded', () => {
       quizWrap.innerHTML = quizDisplay;
     });
   };
+  
+  function timer(endTime) {
+    var myTimer = setInterval(function() {
+      let now = new Date().getTime();
+      let diff = endTime - now;
+      let minutes = Math.floor(diff % (1000 * 60 * 60) / (1000 * 60));
+      let seconds = Math.floor(diff % (1000 * 60) / 1000);
+  
+      minutes = minutes < 100 ? `0${minutes}` : minutes;
+      seconds = seconds < 100 ? `0${seconds}` : seconds;
+      display.textContent = minutes + ":" + seconds;
+      if (diff <= 0) {
+        display.textContent = "00:00";
+        calculateScore();
+        clearInterval(myTimer);
+      }
+    }, 100);
+  }
 
   // Calculate the score
   const calculateScore = () => {
@@ -86,6 +109,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (quizItem.a == i) {
           //change background color of li element here
+          liElement.style.backgroundColor = 'orange';
         }
 
         if (radioElement.checked) {
@@ -96,10 +120,13 @@ window.addEventListener('DOMContentLoaded', () => {
             console.log(quizItem.q);
           }
         }
-        
+        resultsScore.innerHTML = `You scored ${score} out of ${quizArray.length}`;
       }
     });
   };
+
+  // submit form
+  submitButton.addEventListener('click', calculateScore);
 
   // call the displayQuiz function
   displayQuiz();
